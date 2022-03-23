@@ -50,28 +50,28 @@
                 android:orientation="vertical">
 
                 <RadioButton
-                    android:id="@+id/dollaroStatunitense"
+                    android:id="@+id/USD"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@string/dollaroStatunitense" />
 
                 <RadioButton
-                    android:id="@+id/sterlinaBritannica"
+                    android:id="@+id/GBP"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@string/sterlinaBritannica" />
 
                 <RadioButton
-                    android:id="@+id/francoSvizzero"
+                    android:id="@+id/CHF"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@string/francoSvizzero" />
 
                 <RadioButton
-                    android:id="@+id/yenGiapponese"
+                    android:id="@+id/JPY"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -110,5 +110,11 @@
         android:layout_height="135dp"
         android:gravity="center_vertical"
         android:hint="Risultato convertito" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="83dp"
+        android:entries="@array/spinner"/>
 
 </LinearLayout>

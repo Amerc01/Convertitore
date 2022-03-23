@@ -43,40 +43,11 @@
             android:text="@string/valuta" />
 
             <!-- I radio-button sono all’interno di un radio-group -->
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RadioButton
-                    android:id="@+id/USD"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="@string/dollaroStatunitense" />
-
-                <RadioButton
-                    android:id="@+id/GBP"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="@string/sterlinaBritannica" />
-
-                <RadioButton
-                    android:id="@+id/CHF"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="@string/francoSvizzero" />
-
-                <RadioButton
-                    android:id="@+id/JPY"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="@string/yenGiapponese" />
-            </RadioGroup>
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:entries="@array/spinner" />
 
         </TableRow>
     </TableLayout>
@@ -111,10 +82,11 @@
         android:gravity="center_vertical"
         android:hint="Risultato convertito" />
 
-    <Spinner
-        android:id="@+id/spinner"
+    <EditText
+        android:id="@+id/test"
         android:layout_width="match_parent"
-        android:layout_height="83dp"
-        android:entries="@array/spinner"/>
+        android:layout_height="135dp"
+        android:gravity="center_vertical"
+        android:hint="Risultato convertito" />
 
 </LinearLayout>

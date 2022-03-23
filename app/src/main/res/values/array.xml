@@ -2,12 +2,8 @@
 <resources>
     <string-array name="spinner">
         <item>USD</item>
-        <item>EUR</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>GBP</item>
+        <item>JPY</item>
+        <item>CHF</item>
     </string-array>
 </resources>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ConvertitoreEuroDollaro</string>
+    <string name="quantita">Quantità</string>
+    <string name="dollaroStatunitense">DollaroStatunitense</string>
+    <string name="sterlinaBritannica">SterlinaBritannica</string>
+    <string name="francoSvizzero">FrancoSvizzero</string>
+    <string name="yenGiapponese">YenGiapponese</string>
+    <string name="valuta">Valuta</string>
+    <string name="convertiInEuro">Converti in euro</string>
+    <string name="convertiDaEuro">Converti da euro</string>
+</resources>

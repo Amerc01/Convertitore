@@ -7,6 +7,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -17,17 +19,14 @@ import javax.xml.parsers.ParserConfigurationException;
 public class ECBRequest {
     private String url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 
-    public float getRate(String currency) {
+    public Double getRate(String currency) {
 
-        float rate = 0.0F;
+        Double rate = 0.0;
 
         try {
             // invoke WS
             URL server = new URL(url);
             HttpsURLConnection service = (HttpsURLConnection) server.openConnection();
-            //service.setRequestProperty("Host", "https://www.ecb.europa.eu"); // ?
-            //service.setRequestProperty("Accept", "text/xml");
-            //service.setRequestProperty("Accept-Charset", "UTF-8");
             service.setDoInput(true);
             service.setRequestMethod("GET");
             service.setReadTimeout(1000); // timeout: 1s
@@ -44,29 +43,23 @@ public class ECBRequest {
             Element root = document.getDocumentElement();
             NodeList list = root.getElementsByTagName("Cube");
             if (list != null) {
-                for (int i = 0; i < list.getLength(); i++) {
-                    Element cube = (Element) list.item(i);
-                    if (cube.hasAttribute("currency")) {
-                        Attr _currency = cube.getAttributeNode("currency");
-                        String currency = _currency.getValue();
-                        if (currency.equalsIgnoreCase("USD")) {
-                            Attr __rate = cube.getAttributeNode("rate");
-                            String _rate = __rate.getValue();
-                            try {
-                                rate = Float.parseFloat(_rate);
-                                return rate;
-                            } catch (NumberFormatException exception) {
-                                service.getInputStream().close();
-                                return rate;
-                            }
+                try {
+                    double convertRate = 0;
+                    final NodeList node = root.getElementsByTagName("Cube");
+                    for (int i = 0; i < node.getLength(); i++) {
+                        final Element element = (Element) node.item(i);
+                        if (element.getAttribute("currency").equalsIgnoreCase(currency)) {
+                            convertRate = Double.parseDouble(element.getAttribute("rate"));
                         }
                     }
+                    return convertRate;
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
             }
-            service.getInputStream().close();
-            return rate;
-        } catch (IOException | ParserConfigurationException | SAXException exception) {
-            return rate;
+        } catch (SAXException | ParserConfigurationException | IOException e) {
+            e.printStackTrace();
         }
+        return rate;
     }
 }

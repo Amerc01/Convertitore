@@ -19,26 +19,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button convertiDaEuro = findViewById(R.id.convertiDaEuro);
-        convertiDaEuro.setOnClickListener(this::onClickIn);
-
         final RadioGroup radioGroup = findViewById(R.id.radioGroup);
-        final RadioButton checkedRadioButton = findViewById(radioGroup.getCheckedRadioButtonId());
-
+        final int b = radioGroup.getCheckedRadioButtonId();
+        final RadioButton r = findViewById(b);
+        final String currency = r.getTag().toString();
 
 
         Button convertiInEuro = findViewById(R.id.convertiInEuro);
         convertiInEuro.setOnClickListener(view -> {
-            onClick(view, checkedRadioButton);
+            onClickIn(view, currency);
         });
 
+        Button convertiDaEuro = findViewById(R.id.convertiDaEuro);
+        convertiInEuro.setOnClickListener(view -> {
+            onClickFrom(view, currency);
+        });
     }
 
-    private void onClick(View view, RadioButton buttonChecked) {
+    //da valuta a euro
+    private void onClickIn(View view, String currency) {
         //prendo il valore inserito dall'utente
         EditText input = findViewById(R.id.quantita);
         float quantita = Float.parseFloat(input.getText().toString());
-
 
 
         new Thread(new Runnable() {
@@ -50,13 +52,13 @@ public class MainActivity extends AppCompatActivity {
                 //fa il parsing della risposta
                 //e restituisce il valore del tasso di conversione
 
-                float rate = request.getRate(String currency);
+                Double rate = request.getRate(currency);
 
                 Handler handler = new Handler(Looper.getMainLooper());
                 boolean post = handler.post(() -> {
                     //modifica all'interfaccia
                     //calcolo il valore in euro
-                    float euro = dollari / rate;
+                    Double euro =  quantita / rate;
 
                     TextView result = MainActivity.this.findViewById(R.id.resultField);
                     result.setText(String.valueOf(euro));
@@ -66,6 +68,36 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void onClickIn(View view) {
+    //da euro a valuta
+    private void onClickFrom(View view, String currency) {
+
+        //prendo il valore inserito dall'utente
+        EditText input = findViewById(R.id.quantita);
+        float quantita = Float.parseFloat(input.getText().toString());
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //thread che effettua la richiesta asincrona
+                ECBRequest request = new ECBRequest();
+                //getRate effettua la richiesta al server
+                //fa il parsing della risposta
+                //e restituisce il valore del tasso di conversione
+
+                Double rate = request.getRate(currency);
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                boolean post = handler.post(() -> {
+                    //modifica all'interfaccia
+                    //calcolo il valore in euro
+                    Double valuta =  quantita * rate;
+
+                    TextView result = MainActivity.this.findViewById(R.id.resultField);
+                    result.setText(String.valueOf(valuta));
+
+                });
+            }
+        }).start();
     }
 }
